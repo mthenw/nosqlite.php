@@ -4,7 +4,7 @@ namespace NoSQLite;
 require_once 'NoSQLite/Collection.php';
 
 /**
- * General class for managing key-value datastore
+ * Managing class key-value collections
  */
 class NoSQLite
 {
