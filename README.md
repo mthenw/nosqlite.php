@@ -1,4 +1,4 @@
-# NoSQLite -- simple key => value store based on SQLite3
+# NoSQLite – simple key => value store based on SQLite3
 
 ## Introduction
 
@@ -24,7 +24,7 @@ version 0.1
 
 3. Set value in collection (key and value max length are [limited by SQLite TEXT datatype](http://sqlite.org/limits.html#max_length))
 
-        $collection->set(uniqid(), 'Good Will Hunting');
+        $collection->set(uniqid(), json_encode(array('title' => 'Good Will Hunting', 'director' => 'Gus Van Sant'));
 
 4. Get value from collection
 
