@@ -12,7 +12,7 @@ class NoSQLiteTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(get_class($collection), 'NoSQLite\Collection');
     }
 
-    public function __destruct()
+    public function tearDown()
     {
         unlink(self::DB_FILE);
     }
