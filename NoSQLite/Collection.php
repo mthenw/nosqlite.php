@@ -132,7 +132,7 @@ class Collection implements \Iterator
     {
         if (!is_string($key))
         {
-            throw new InvalidArgumentException('Expected string as key');
+            throw new \InvalidArgumentException('Expected string as key');
         }
         
         if (isset($key, $this->_data))
@@ -165,12 +165,12 @@ class Collection implements \Iterator
     {
         if (!is_string($key))
         {
-            throw new InvalidArgumentException('Expected string as key');
+            throw new \InvalidArgumentException('Expected string as key');
         }
         
         if (!is_string($value))
         {
-            throw new InvalidArgumentException('Expected string as value');
+            throw new \InvalidArgumentException('Expected string as value');
         }
         
         if (isset($this->_data[$key]))
@@ -187,7 +187,7 @@ class Collection implements \Iterator
         $stmt->bindParam(':key', $key, \PDO::PARAM_STR);
         $stmt->bindParam(':value', $value, \PDO::PARAM_STR);
         $stmt->execute();
-        $this->_data[$key] = $value;
+        $this->_data[(string)$key] = $value;
 
         return $this->_data[$key];
     }
@@ -204,5 +204,15 @@ class Collection implements \Iterator
         $stmt->execute();
         
         unset($this->_data[$key]);
+    }
+
+    /**
+     * Delete all values from collection
+     */
+    public function deleteAll()
+    {
+        $stmt = $this->_db->prepare('DELETE FROM ' . $this->_name);
+        $stmt->execute();
+        $this->_data = array();
     }
 }
