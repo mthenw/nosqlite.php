@@ -1,6 +1,6 @@
 <?php
-require_once '../NoSQLite.php';
-require_once '../NoSQLite/Collection.php';
+require_once '../library/NoSQLite.php';
+require_once '../library/NoSQLite/Collection.php';
 
 class CollectionTest extends PHPUnit_Framework_TestCase
 {

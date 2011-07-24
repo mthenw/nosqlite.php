@@ -1,5 +1,5 @@
 <?php
-require_once '../NoSQLite.php';
+require_once '../library/NoSQLite.php';
 
 class NoSQLiteTest extends PHPUnit_Framework_TestCase
 {
