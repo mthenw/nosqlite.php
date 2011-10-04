@@ -37,6 +37,12 @@ class Collection implements \Iterator
     protected $_data = array();
 
     /**
+     * Data were loaded from DB
+     * @var bool
+     */
+    protected $_loaded = false;
+
+    /**
      * Create collection
      * 
      * @param PDO $db PDO database instance
@@ -47,7 +53,6 @@ class Collection implements \Iterator
         $this->_db = $db;
         $this->_name = $name;
         $this->_createTable();
-        $this->_loadDocuments();
     }
 
     /**
@@ -107,20 +112,7 @@ class Collection implements \Iterator
         $stmt.= $this->_valueColumnName . '" TEXT);';
         $this->_db->exec($stmt);
     }
-    
-    /**
-     * Load data from collection table
-     */
-    protected function _loadDocuments()
-    {
-        $stmt = $this->_db->prepare('SELECT * FROM ' . $this->_name);
-        $stmt->execute();
-        
-        while ($row = $stmt->fetch(\PDO::FETCH_NUM, \PDO::FETCH_ORI_NEXT)) {
-            $this->_data[$row[0]] = $row[1];
-        }
-    }
-    
+
     /**
      * Get value for specified key
      * 
@@ -134,12 +126,24 @@ class Collection implements \Iterator
         {
             throw new \InvalidArgumentException('Expected string as key');
         }
-        
+
+        if (!$this->_loaded)
+        {
+            $stmt = $this->_db->prepare('SELECT * FROM ' . $this->_name . ' WHERE ' . $this->_keyColumnName . ' = :key;');
+            $stmt->bindParam(':key', $key, \PDO::PARAM_STR);
+            $stmt->execute();
+
+            if ($row = $stmt->fetch(\PDO::FETCH_NUM))
+            {
+                $this->_data[$row[0]] = $row[1];
+            }
+        }
+
         if (isset($key, $this->_data))
         {
             return $this->_data[$key];
         }
-        
+
         return null;
     }
     
@@ -150,9 +154,19 @@ class Collection implements \Iterator
      */
     public function getAll()
     {
+        if (!$this->_loaded)
+        {
+            $stmt = $this->_db->prepare('SELECT * FROM ' . $this->_name);
+            $stmt->execute();
+
+            while ($row = $stmt->fetch(\PDO::FETCH_NUM, \PDO::FETCH_ORI_NEXT)) {
+                $this->_data[$row[0]] = $row[1];
+            }
+        }
+
         return $this->_data;
     }
-    
+
     /**
      * Set value on specified key
      * 
@@ -200,7 +214,7 @@ class Collection implements \Iterator
     public function delete($key)
     {
         $stmt = $this->_db->prepare('DELETE FROM ' . $this->_name . ' WHERE ' . $this->_keyColumnName . ' = :key;');
-        $stmt->bindParam(':key', $key, PDO::PARAM_STR);
+        $stmt->bindParam(':key', $key, \PDO::PARAM_STR);
         $stmt->execute();
         
         unset($this->_data[$key]);
