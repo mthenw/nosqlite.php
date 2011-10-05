@@ -24,6 +24,16 @@ class CollectionTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($this->_collection->get($key), $value);
     }
 
+    public function testFirstGet()
+    {
+        $key = uniqid();
+        $value = 'value';
+
+        $this->_collection->set($key, $value);
+        $this->setUp();
+        $this->assertEquals($this->_collection->get($key), $value);
+    }
+
     /**
      * @dataProvider inValidData
      * @expectedException InvalidArgumentException
@@ -32,6 +42,14 @@ class CollectionTest extends PHPUnit_Framework_TestCase
     {
         $this->_collection->set($key, $value);
         $this->_collection->get($key);
+    }
+
+    public function testDelete()
+    {
+        $key = uniqid();
+        $this->_collection->set($key, 'value');
+        $this->_collection->delete($key);
+        $this->assertEquals(null, $this->_collection->get($key));
     }
 
     public function testDeleteAll()
