@@ -44,7 +44,7 @@ class Collection implements \Iterator
 
     /**
      * Create collection
-     * 
+     *
      * @param PDO $db PDO database instance
      * @param string $name collection name 
      */
@@ -115,9 +115,9 @@ class Collection implements \Iterator
 
     /**
      * Get value for specified key
-     * 
+     *
      * @param string $key
-     * @return string 
+     * @return string
      * @throws InvalidArgumentException
      */
     public function get($key)
@@ -139,18 +139,18 @@ class Collection implements \Iterator
             }
         }
 
-        if (isset($key, $this->_data))
+        if (isset($this->_data[$key]))
         {
             return $this->_data[$key];
         }
 
         return null;
     }
-    
+
     /**
      * Get all values as array with key => value structure
-     * 
-     * @return array 
+     *
+     * @return array
      */
     public function getAll()
     {
@@ -169,7 +169,7 @@ class Collection implements \Iterator
 
     /**
      * Set value on specified key
-     * 
+     *
      * @param string $key
      * @param string $value
      * @return string value stored in collection
@@ -181,12 +181,12 @@ class Collection implements \Iterator
         {
             throw new \InvalidArgumentException('Expected string as key');
         }
-        
+
         if (!is_string($value))
         {
             throw new \InvalidArgumentException('Expected string as value');
         }
-        
+
         if (isset($this->_data[$key]))
         {
             $queryString ='UPDATE ' . $this->_name . ' SET ' . $this->_valueColumnName . ' = :value WHERE ';
@@ -196,7 +196,7 @@ class Collection implements \Iterator
         {
             $queryString = 'INSERT INTO ' . $this->_name . ' VALUES (:key, :value);';
         }
-        
+
         $stmt = $this->_db->prepare($queryString);
         $stmt->bindParam(':key', $key, \PDO::PARAM_STR);
         $stmt->bindParam(':value', $value, \PDO::PARAM_STR);
@@ -205,10 +205,10 @@ class Collection implements \Iterator
 
         return $this->_data[$key];
     }
-    
+
     /**
      * Delete value from collection
-     * 
+     *
      * @param string $key 
      */
     public function delete($key)
@@ -216,7 +216,7 @@ class Collection implements \Iterator
         $stmt = $this->_db->prepare('DELETE FROM ' . $this->_name . ' WHERE ' . $this->_keyColumnName . ' = :key;');
         $stmt->bindParam(':key', $key, \PDO::PARAM_STR);
         $stmt->execute();
-        
+
         unset($this->_data[$key]);
     }
 
