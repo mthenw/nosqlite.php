@@ -118,7 +118,9 @@ class Collection
             throw new \InvalidArgumentException('Expected string as key');
         }
 
-        if (!$this->loaded) {
+        if (isset($this->data[$key])) {
+            return $this->data[$key];
+        } else if (!$this->loaded) {
             $stmt = $this->db->prepare(
                 'SELECT * FROM ' . $this->name . ' WHERE ' . $this->keyColumnName
                 . ' = :key;'
@@ -128,11 +130,8 @@ class Collection
 
             if ($row = $stmt->fetch(\PDO::FETCH_NUM)) {
                 $this->data[$row[0]] = $row[1];
+                return $this->data[$key];
             }
-        }
-
-        if (isset($this->data[$key])) {
-            return $this->data[$key];
         }
 
         return null;

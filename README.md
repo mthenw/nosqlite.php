@@ -4,7 +4,7 @@
 
 NoSQLite is simple key-value store using SQLite as raw data store. Mainly for small project where MySQL is too heavy and files are too ugly.
 
-version 0.1.3
+version 0.1.4
 
 ## Requirements
 
