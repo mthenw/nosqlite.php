@@ -12,8 +12,8 @@
  * @link     https://github.com/mthenw/NoSQLite-for-PHP
  */
 
-require_once '../library/NoSQLite.php';
-require_once '../library/NoSQLite/Collection.php';
+require_once __DIR__ . '/../../library/NoSQLite.php';
+require_once __DIR__ . '/../../library/NoSQLite/Collection.php';
 
 /**
  * Class CollectionTest

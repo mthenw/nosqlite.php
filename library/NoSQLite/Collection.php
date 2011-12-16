@@ -14,7 +14,7 @@
 
 namespace NoSQLite;
 
-require_once '../library/NoSQLite.php';
+require_once __DIR__ . '/../NoSQLite.php';
 
 /**
  * Class Collection
