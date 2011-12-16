@@ -1,8 +1,29 @@
 <?php
-namespace NoSQLite;
 
 /**
- * NoSQLite key-value collection
+ * Collection
+ *
+ * PHP Version 5
+ *
+ * @category NoSQLite
+ * @package  NoSQLite
+ * @author   Maciej Winnicki <maciej.winnicki@gmail.com>
+ * @license  https://github.com/mthenw/NoSQLite-for-PHP The MIT License
+ * @link     https://github.com/mthenw/NoSQLite-for-PHP
+ */
+
+namespace NoSQLite;
+
+require_once '../library/NoSQLite.php';
+
+/**
+ * Class Collection
+ *
+ * @category NoSQLite
+ * @package  NoSQLite
+ * @author   Maciej Winnicki <maciej.winnicki@gmail.com>
+ * @license  https://github.com/mthenw/NoSQLite-for-PHP The MIT License
+ * @link     https://github.com/mthenw/NoSQLite-for-PHP
  */
 class Collection implements \Iterator
 {
@@ -10,57 +31,61 @@ class Collection implements \Iterator
      * PDO instance
      * @var PDO
      */
-    protected $_db = null;
+    protected $db = null;
 
     /**
      * Collection name
      * @var string
      */
-    protected $_name = null;
+    protected $name = null;
 
     /**
      * Key column name
      * @var string
      */
-    protected $_keyColumnName = 'key';
+    protected $keyColumnName = 'key';
 
     /**
      * Value column name
      * @var string
      */
-    protected $_valueColumnName = 'value';
+    protected $valueColumnName = 'value';
 
     /**
      * Documents stored in collection
      * @var array 
      */
-    protected $_data = array();
+    protected $data = array();
 
     /**
      * Data were loaded from DB
      * @var bool
      */
-    protected $_loaded = false;
+    protected $loaded = false;
 
     /**
      * Create collection
      *
-     * @param PDO $db PDO database instance
-     * @param string $name collection name 
+     * @param PDO    $db   PDO database instance
+     * @param string $name collection name
+     *
+     * @return void
      */
     public function __construct($db, $name)
     {
-        $this->_db = $db;
-        $this->_name = $name;
-        $this->_createTable();
+        $this->db = $db;
+        $this->name = $name;
+        $this->createTable();
     }
 
     /**
      * Rewind the Iterator to the first element
+     *
+     * @return void
      */
     public function rewind()
     {
-        reset($this->_data);
+        reset($this->data);
     }
 
     /**
@@ -70,7 +95,7 @@ class Collection implements \Iterator
      */
     public function current()
     {
-        return current($this->_data);
+        return current($this->data);
     }
 
     /**
@@ -80,68 +105,74 @@ class Collection implements \Iterator
      */
     public function key()
     {
-        return key($this->_data);
+        return key($this->data);
     }
 
     /**
      * Move forward to next element
+     *
+     * @return void
      */
     public function next()
     {
-        next($this->_data);
+        next($this->data);
     }
 
     /**
      * Checks if current position is valid
      *
-     * @return boolean The return value will be casted to boolean and then evaluated. Returns TRUE on success or FALSE
-     * on failure.
+     * @return boolean The return value will be casted to boolean and then evaluated.
+     * Returns TRUE on success or FALSE on failure.
+     *
+     * @return bool
      */
     public function valid()
     {
-        return key($this->_data) !== null;
+        return key($this->data) !== null;
     }
     
     /**
      * Create storage table in database if not exists
+     *
+     * @return void
      */
-    protected function _createTable()
+    protected function createTable()
     {
-        $stmt = 'CREATE TABLE IF NOT EXISTS "' . $this->_name;
-        $stmt.= '" ("' . $this->_keyColumnName . '" TEXT PRIMARY KEY, "';
-        $stmt.= $this->_valueColumnName . '" TEXT);';
-        $this->_db->exec($stmt);
+        $stmt = 'CREATE TABLE IF NOT EXISTS "' . $this->name;
+        $stmt.= '" ("' . $this->keyColumnName . '" TEXT PRIMARY KEY, "';
+        $stmt.= $this->valueColumnName . '" TEXT);';
+        $this->db->exec($stmt);
     }
 
     /**
      * Get value for specified key
      *
-     * @param string $key
-     * @return string
+     * @param string $key key
+     *
      * @throws InvalidArgumentException
+     * @return string|null
      */
     public function get($key)
     {
-        if (!is_string($key))
-        {
+        if (!is_string($key)) {
             throw new \InvalidArgumentException('Expected string as key');
         }
 
-        if (!$this->_loaded)
-        {
-            $stmt = $this->_db->prepare('SELECT * FROM ' . $this->_name . ' WHERE ' . $this->_keyColumnName . ' = :key;');
+        if (!$this->loaded) {
+            $stmt = $this->db->prepare(
+                'SELECT * FROM ' . $this->name . ' WHERE ' . $this->keyColumnName
+                . ' = :key;'
+            );
             $stmt->bindParam(':key', $key, \PDO::PARAM_STR);
             $stmt->execute();
 
-            if ($row = $stmt->fetch(\PDO::FETCH_NUM))
-            {
-                $this->_data[$row[0]] = $row[1];
+            if ($row = $stmt->fetch(\PDO::FETCH_NUM)) {
+                $this->data[$row[0]] = $row[1];
             }
         }
 
-        if (isset($this->_data[$key]))
-        {
-            return $this->_data[$key];
+        if (isset($this->data[$key])) {
+            return $this->data[$key];
         }
 
         return null;
@@ -154,79 +185,82 @@ class Collection implements \Iterator
      */
     public function getAll()
     {
-        if (!$this->_loaded)
-        {
-            $stmt = $this->_db->prepare('SELECT * FROM ' . $this->_name);
+        if (!$this->loaded) {
+            $stmt = $this->db->prepare('SELECT * FROM ' . $this->name);
             $stmt->execute();
 
             while ($row = $stmt->fetch(\PDO::FETCH_NUM, \PDO::FETCH_ORI_NEXT)) {
-                $this->_data[$row[0]] = $row[1];
+                $this->data[$row[0]] = $row[1];
             }
         }
 
-        return $this->_data;
+        return $this->data;
     }
 
     /**
      * Set value on specified key
      *
-     * @param string $key
-     * @param string $value
+     * @param string $key   key
+     * @param string $value value
+     *
      * @return string value stored in collection
      * @throws InvalidArgumentException
      */
     public function set($key, $value)
     {
-        if (!is_string($key))
-        {
+        if (!is_string($key)) {
             throw new \InvalidArgumentException('Expected string as key');
         }
 
-        if (!is_string($value))
-        {
+        if (!is_string($value)) {
             throw new \InvalidArgumentException('Expected string as value');
         }
 
-        if (isset($this->_data[$key]))
-        {
-            $queryString ='UPDATE ' . $this->_name . ' SET ' . $this->_valueColumnName . ' = :value WHERE ';
-            $queryString.= $this->_keyColumnName . ' = :key;';
-        }
-        else
-        {
-            $queryString = 'INSERT INTO ' . $this->_name . ' VALUES (:key, :value);';
+        if (isset($this->data[$key])) {
+            $queryString ='UPDATE ' . $this->name . ' SET ';
+            $queryString.= $this->valueColumnName . ' = :value WHERE ';
+            $queryString.= $this->keyColumnName . ' = :key;';
+        } else {
+            $queryString = 'INSERT INTO ' . $this->name . ' VALUES (:key, :value);';
         }
 
-        $stmt = $this->_db->prepare($queryString);
+        $stmt = $this->db->prepare($queryString);
         $stmt->bindParam(':key', $key, \PDO::PARAM_STR);
         $stmt->bindParam(':value', $value, \PDO::PARAM_STR);
         $stmt->execute();
-        $this->_data[(string)$key] = $value;
+        $this->data[(string)$key] = $value;
 
-        return $this->_data[$key];
+        return $this->data[$key];
     }
 
     /**
      * Delete value from collection
      *
-     * @param string $key 
+     * @param string $key key
+     *
+     * @return void
      */
     public function delete($key)
     {
-        $stmt = $this->_db->prepare('DELETE FROM ' . $this->_name . ' WHERE ' . $this->_keyColumnName . ' = :key;');
+        $stmt = $this->db->prepare(
+            'DELETE FROM ' . $this->name . ' WHERE ' . $this->keyColumnName
+            . ' = :key;'
+        );
         $stmt->bindParam(':key', $key, \PDO::PARAM_STR);
         $stmt->execute();
 
-        unset($this->_data[$key]);
+        unset($this->data[$key]);
     }
 
     /**
      * Delete all values from collection
+     *
+     * @return void
      */
     public function deleteAll()
     {
-        $stmt = $this->_db->prepare('DELETE FROM ' . $this->_name);
+        $stmt = $this->db->prepare('DELETE FROM ' . $this->name);
         $stmt->execute();
-        $this->_data = array();
+        $this->data = array();
     }
 }

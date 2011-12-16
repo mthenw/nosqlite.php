@@ -1,64 +1,130 @@
 <?php
+
+/**
+ * NoSQLite Collection Test
+ *
+ * PHP Version 5
+ *
+ * @category NoSQLite
+ * @package  NoSQLite
+ * @author   Maciej Winnicki <maciej.winnicki@gmail.com>
+ * @license  https://github.com/mthenw/NoSQLite-for-PHP The MIT License
+ * @link     https://github.com/mthenw/NoSQLite-for-PHP
+ */
+
 require_once '../library/NoSQLite.php';
 require_once '../library/NoSQLite/Collection.php';
 
+/**
+ * Class CollectionTest
+ *
+ * @category NoSQLite
+ * @package  NoSQLite
+ * @author   Maciej Winnicki <maciej.winnicki@gmail.com>
+ * @license  https://github.com/mthenw/NoSQLite-for-PHP The MIT License
+ * @link     https://github.com/mthenw/NoSQLite-for-PHP
+ */
 class CollectionTest extends PHPUnit_Framework_TestCase
 {
     const DB_FILE = 'testCollectionTest.db';
 
-    protected $_nsl;
-    protected $_collection;
+    /**
+     * @var NoSQLite\NoSQLite
+     */
+    protected $nsl;
 
+    /**
+     * @var NoSQLite\Collection
+     */
+    protected $collection;
+
+    /**
+     * Setup test
+     *
+     * @return void
+     */
     public function setUp()
     {
-        $this->_nsl = new NoSQLite\NoSQLite(self::DB_FILE);
-        $this->_collection = $this->_nsl->getCollection('test');
+        $this->nsl = new NoSQLite\NoSQLite(self::DB_FILE);
+        $this->collection = $this->nsl->getCollection('test');
     }
 
     /**
+     * Test getting and setting value
+     *
+     * @param string $key   key
+     * @param string $value value
+     *
      * @dataProvider validData
+     * @return void
      */
     public function testSetGetValue($key, $value)
     {
-        $this->_collection->set($key, $value);
-        $this->assertEquals($this->_collection->get($key), $value);
+        $this->collection->set($key, $value);
+        $this->assertEquals($this->collection->get($key), $value);
     }
 
+    /**
+     * Test first get
+     *
+     * @return void
+     */
     public function testFirstGet()
     {
         $key = uniqid();
         $value = 'value';
 
-        $this->_collection->set($key, $value);
+        $this->collection->set($key, $value);
         $this->setUp();
-        $this->assertEquals($this->_collection->get($key), $value);
+        $this->assertEquals($this->collection->get($key), $value);
     }
 
     /**
+     * Test exception
+     *
+     * @param string $key   key
+     * @param string $value value
+     *
      * @dataProvider inValidData
      * @expectedException InvalidArgumentException
+     * @return void
      */
     public function testSetGetExceptions($key, $value)
     {
-        $this->_collection->set($key, $value);
-        $this->_collection->get($key);
+        $this->collection->set($key, $value);
+        $this->collection->get($key);
     }
 
+    /**
+     * Test delete value
+     *
+     * @return void
+     */
     public function testDelete()
     {
         $key = uniqid();
-        $this->_collection->set($key, 'value');
-        $this->_collection->delete($key);
-        $this->assertEquals(null, $this->_collection->get($key));
+        $this->collection->set($key, 'value');
+        $this->collection->delete($key);
+        $this->assertEquals(null, $this->collection->get($key));
     }
 
+    /**
+     * Test all values
+     *
+     * @return void
+     */
     public function testDeleteAll()
     {
-        $this->_collection->set(uniqid(), 'value');
-        $this->_collection->deleteAll();
-        $this->assertEquals(array(), $this->_collection->getAll());
+        $this->collection->set(uniqid(), 'value');
+        $this->collection->deleteAll();
+        $this->assertEquals(array(), $this->collection->getAll());
     }
 
+    /**
+     * Test getting all values
+     *
+     * @return void
+     */
     public function testGetAll()
     {
         $data = array(
@@ -66,16 +132,21 @@ class CollectionTest extends PHPUnit_Framework_TestCase
             '_2' => 'value2'
         );
 
-        $this->_collection->deleteAll();
+        $this->collection->deleteAll();
 
-        foreach($data as $key => $value)
-        {
-            $this->_collection->set($key, $value);
+        foreach ($data as $key => $value) {
+            $this->collection->set($key, $value);
         }
 
-        $this->assertEquals($data, $this->_collection->getAll());
+        $this->assertEquals($data, $this->collection->getAll());
     }
 
+    /**
+     * Data provider - valid data
+     *
+     * @static
+     * @return array
+     */
     public static function validData()
     {
         return array(
@@ -84,6 +155,12 @@ class CollectionTest extends PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * Data provider - invalid data
+     *
+     * @static
+     * @return array
+     */
     public static function inValidData()
     {
         return array(
@@ -92,6 +169,11 @@ class CollectionTest extends PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * Tear down
+     *
+     * @return void
+     */
     public function tearDown()
     {
         unlink(self::DB_FILE);
