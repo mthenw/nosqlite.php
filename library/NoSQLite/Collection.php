@@ -25,7 +25,7 @@ require_once '../library/NoSQLite.php';
  * @license  https://github.com/mthenw/NoSQLite-for-PHP The MIT License
  * @link     https://github.com/mthenw/NoSQLite-for-PHP
  */
-class Collection implements \Iterator
+class Collection
 {
     /**
      * PDO instance
@@ -76,46 +76,6 @@ class Collection implements \Iterator
         $this->db = $db;
         $this->name = $name;
         $this->createTable();
-    }
-
-    /**
-     * Rewind the Iterator to the first element
-     *
-     * @return void
-     */
-    public function rewind()
-    {
-        reset($this->data);
-    }
-
-    /**
-     * Return the current element
-     *
-     * @return mixed
-     */
-    public function current()
-    {
-        return current($this->data);
-    }
-
-    /**
-     * Return the key of the current element
-     *
-     * @return mixed
-     */
-    public function key()
-    {
-        return key($this->data);
-    }
-
-    /**
-     * Move forward to next element
-     *
-     * @return void
-     */
-    public function next()
-    {
-        next($this->data);
     }
 
     /**
