@@ -1,5 +1,7 @@
 # NoSQLite – simple key => value store based on SQLite3
 
+[![Build Status](https://secure.travis-ci.org/mthenw/nosqlite-php.png)](https://secure.travis-ci.org/mthenw/nosqlite-php)
+
 ## Introduction
 
 NoSQLite is simple key-value store using SQLite as raw data store. Mainly for small project where MySQL is too heavy and files are too ugly.
