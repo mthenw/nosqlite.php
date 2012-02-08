@@ -12,8 +12,11 @@
  * @link     https://github.com/mthenw/NoSQLite-for-PHP
  */
 
-require_once __DIR__ . '/../../library/NoSQLite.php';
-require_once __DIR__ . '/../../library/NoSQLite/Store.php';
+namespace NoSQLite\Tests;
+
+use PHPUnit_Framework_TestCase;
+use NoSQLite\NoSQLite;
+use NoSQLite\Store;
 
 /**
  * Class StoreTest
@@ -24,7 +27,7 @@ require_once __DIR__ . '/../../library/NoSQLite/Store.php';
  * @license  https://github.com/mthenw/NoSQLite-for-PHP The MIT License
  * @link     https://github.com/mthenw/NoSQLite-for-PHP
  */
-class StoreTest extends PHPUnit_Framework_TestCase
+class StoreTest extends \PHPUnit_Framework_TestCase
 {
     const DB_FILE = 'storeTest.db';
 
@@ -45,7 +48,7 @@ class StoreTest extends PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->nsl = new NoSQLite\NoSQLite(self::DB_FILE);
+        $this->nsl = new NoSQLite(self::DB_FILE);
         $this->store = $this->nsl->getStore('test');
     }
 

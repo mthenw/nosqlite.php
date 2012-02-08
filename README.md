@@ -6,11 +6,9 @@
 
 NoSQLite is simple key-value store using SQLite as raw data store. Mainly for small project where MySQL is too heavy and files are too ugly.
 
-version 0.1.6
-
 ## Requirements
 
-- PHP >=5.3
+- PHP >=5.3.2
     - PDO (by default as of PHP 5.1.0)
     - PDO_SQLITE (by default as of PHP 5.1.0)
 

@@ -12,7 +12,10 @@
  * @link     https://github.com/mthenw/NoSQLite-for-PHP
  */
 
-require_once __DIR__ . '/../library/NoSQLite.php';
+namespace NoSQLite\Tests;
+
+use NoSQLite\NoSQLite;
+use NoSQLite\Store;
 
 /**
  * Class NoSQLiteTest
@@ -34,7 +37,7 @@ class NoSQLiteTest extends \PHPUnit_Framework_TestCase
      */
     public function testNewStore()
     {
-        $nsl = new NoSQLite\NoSQLite(self::DB_FILE);
+        $nsl = new NoSQLite(self::DB_FILE);
         $store = $nsl->getStore('test');
         $this->assertEquals(get_class($store), 'NoSQLite\Store');
     }

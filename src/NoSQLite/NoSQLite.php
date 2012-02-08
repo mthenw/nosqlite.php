@@ -15,7 +15,7 @@
 
 namespace NoSQLite;
 
-require_once __DIR__ . '/NoSQLite/Store.php';
+use NoSQLite\Store;
 
 /**
  * Class NoSQLite
@@ -55,7 +55,7 @@ class NoSQLite
      */
     public function getStore($storeName)
     {
-        $store = new \NoSQLite\Store($this->db, $storeName);
+        $store = new Store($this->db, $storeName);
         return $store;
     }
 }
