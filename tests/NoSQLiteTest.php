@@ -28,15 +28,15 @@ class NoSQLiteTest extends \PHPUnit_Framework_TestCase
     const DB_FILE = 'testNoSQLiteTest.db';
 
     /**
-     * Test creating new collection
+     * Test creating new store
      *
      * @return void
      */
-    public function testNewCollection()
+    public function testNewStore()
     {
         $nsl = new NoSQLite\NoSQLite(self::DB_FILE);
-        $collection = $nsl->getCollection('test');
-        $this->assertEquals(get_class($collection), 'NoSQLite\Collection');
+        $store = $nsl->getStore('test');
+        $this->assertEquals(get_class($store), 'NoSQLite\Store');
     }
 
     /**

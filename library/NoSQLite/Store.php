@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Collection
+ * Store
  *
  * PHP Version 5
  *
@@ -17,7 +17,7 @@ namespace NoSQLite;
 require_once __DIR__ . '/../NoSQLite.php';
 
 /**
- * Class Collection
+ * Class Store
  *
  * @category NoSQLite
  * @package  NoSQLite
@@ -25,7 +25,7 @@ require_once __DIR__ . '/../NoSQLite.php';
  * @license  https://github.com/mthenw/NoSQLite-for-PHP The MIT License
  * @link     https://github.com/mthenw/NoSQLite-for-PHP
  */
-class Collection
+class Store
 {
     /**
      * PDO instance
@@ -34,7 +34,7 @@ class Collection
     protected $db = null;
 
     /**
-     * Collection name
+     * Store name
      * @var string
      */
     protected $name = null;
@@ -52,7 +52,7 @@ class Collection
     protected $valueColumnName = 'value';
 
     /**
-     * Documents stored in collection
+     * Values stored
      * @var array 
      */
     protected $data = array();
@@ -64,10 +64,10 @@ class Collection
     protected $loaded = false;
 
     /**
-     * Create collection
+     * Create store
      *
      * @param PDO    $db   PDO database instance
-     * @param string $name collection name
+     * @param string $name store name
      *
      * @return void
      */
@@ -149,7 +149,7 @@ class Collection
      * @param string $key   key
      * @param string $value value
      *
-     * @return string value stored in collection
+     * @return string value stored
      * @throws InvalidArgumentException
      */
     public function set($key, $value)
@@ -180,7 +180,7 @@ class Collection
     }
 
     /**
-     * Delete value from collection
+     * Delete value from store
      *
      * @param string $key key
      *
@@ -199,7 +199,7 @@ class Collection
     }
 
     /**
-     * Delete all values from collection
+     * Delete all values from store
      *
      * @return void
      */

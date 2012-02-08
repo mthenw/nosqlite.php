@@ -1,7 +1,7 @@
 <?php
 
 /**
- * NoSQLite Collection Test
+ * NoSQLite Store Test
  *
  * PHP Version 5
  *
@@ -13,10 +13,10 @@
  */
 
 require_once __DIR__ . '/../../library/NoSQLite.php';
-require_once __DIR__ . '/../../library/NoSQLite/Collection.php';
+require_once __DIR__ . '/../../library/NoSQLite/Store.php';
 
 /**
- * Class CollectionTest
+ * Class StoreTest
  *
  * @category NoSQLite
  * @package  NoSQLite
@@ -24,9 +24,9 @@ require_once __DIR__ . '/../../library/NoSQLite/Collection.php';
  * @license  https://github.com/mthenw/NoSQLite-for-PHP The MIT License
  * @link     https://github.com/mthenw/NoSQLite-for-PHP
  */
-class CollectionTest extends PHPUnit_Framework_TestCase
+class StoreTest extends PHPUnit_Framework_TestCase
 {
-    const DB_FILE = 'testCollectionTest.db';
+    const DB_FILE = 'storeTest.db';
 
     /**
      * @var NoSQLite\NoSQLite
@@ -34,9 +34,9 @@ class CollectionTest extends PHPUnit_Framework_TestCase
     protected $nsl;
 
     /**
-     * @var NoSQLite\Collection
+     * @var NoSQLite\Store
      */
-    protected $collection;
+    protected $store;
 
     /**
      * Setup test
@@ -46,7 +46,7 @@ class CollectionTest extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->nsl = new NoSQLite\NoSQLite(self::DB_FILE);
-        $this->collection = $this->nsl->getCollection('test');
+        $this->store = $this->nsl->getStore('test');
     }
 
     /**
@@ -59,9 +59,9 @@ class CollectionTest extends PHPUnit_Framework_TestCase
         $key = uniqid();
         $value = 'value';
 
-        $this->collection->set($key, $value);
+        $this->store->set($key, $value);
         $this->setUp();
-        $this->assertEquals($this->collection->get($key), $value);
+        $this->assertEquals($this->store->get($key), $value);
     }
 
     /**
@@ -76,13 +76,13 @@ class CollectionTest extends PHPUnit_Framework_TestCase
             '_2' => 'value2'
         );
 
-        $this->collection->deleteAll();
+        $this->store->deleteAll();
 
         foreach ($data as $key => $value) {
-            $this->collection->set($key, $value);
+            $this->store->set($key, $value);
         }
 
-        $this->assertEquals($data, $this->collection->getAll());
+        $this->assertEquals($data, $this->store->getAll());
     }
 
     /**
@@ -96,8 +96,8 @@ class CollectionTest extends PHPUnit_Framework_TestCase
      */
     public function testSetGetValue($key, $value)
     {
-        $this->collection->set($key, $value);
-        $this->assertEquals($this->collection->get($key), $value);
+        $this->store->set($key, $value);
+        $this->assertEquals($this->store->get($key), $value);
     }
 
     /**
@@ -110,9 +110,9 @@ class CollectionTest extends PHPUnit_Framework_TestCase
         $key = uniqid();
         $value1 = uniqid();
         $value2 = uniqid();
-        $this->collection->set($key, $value1);
-        $this->collection->set($key, $value2);
-        $this->assertEquals($value2, $this->collection->get($key));
+        $this->store->set($key, $value1);
+        $this->store->set($key, $value2);
+        $this->assertEquals($value2, $this->store->get($key));
     }
 
     /**
@@ -127,8 +127,8 @@ class CollectionTest extends PHPUnit_Framework_TestCase
      */
     public function testSetExceptions($key, $value)
     {
-        $this->collection->set($key, $value);
-        $this->collection->get($key);
+        $this->store->set($key, $value);
+        $this->store->get($key);
     }
 
     /**
@@ -142,7 +142,7 @@ class CollectionTest extends PHPUnit_Framework_TestCase
      */
     public function testGetExceptions($key)
     {
-        $this->collection->get($key);
+        $this->store->get($key);
     }
 
     /**
@@ -153,9 +153,9 @@ class CollectionTest extends PHPUnit_Framework_TestCase
     public function testDelete()
     {
         $key = uniqid();
-        $this->collection->set($key, 'value');
-        $this->collection->delete($key);
-        $this->assertEquals(null, $this->collection->get($key));
+        $this->store->set($key, 'value');
+        $this->store->delete($key);
+        $this->assertEquals(null, $this->store->get($key));
     }
 
     /**
@@ -165,9 +165,9 @@ class CollectionTest extends PHPUnit_Framework_TestCase
      */
     public function testDeleteAll()
     {
-        $this->collection->set(uniqid(), 'value');
-        $this->collection->deleteAll();
-        $this->assertEquals(array(), $this->collection->getAll());
+        $this->store->set(uniqid(), 'value');
+        $this->store->deleteAll();
+        $this->assertEquals(array(), $this->store->getAll());
     }
 
     /**

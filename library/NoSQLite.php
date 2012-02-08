@@ -15,11 +15,11 @@
 
 namespace NoSQLite;
 
-require_once __DIR__ . '/NoSQLite/Collection.php';
+require_once __DIR__ . '/NoSQLite/Store.php';
 
 /**
  * Class NoSQLite
- * Managing class key-value collections
+ * Managing class for key-value store
  *
  * @category NoSQLite
  * @package  NoSQLite
@@ -47,15 +47,15 @@ class NoSQLite
     }
 
     /**
-     * Get NoSQLite collection instance
+     * Get NoSQLite store instance
      * 
-     * @param string $collectionName collection name
+     * @param string $storeName store name
      *
-     * @return \NoSQLite\Collection
+     * @return \NoSQLite\Store
      */
-    public function getCollection($collectionName)
+    public function getStore($storeName)
     {
-        $collection = new \NoSQLite\Collection($this->db, $collectionName);
-        return $collection;
+        $store = new \NoSQLite\Store($this->db, $storeName);
+        return $store;
     }
 }

@@ -6,7 +6,7 @@
 
 NoSQLite is simple key-value store using SQLite as raw data store. Mainly for small project where MySQL is too heavy and files are too ugly.
 
-version 0.1.5
+version 0.1.6
 
 ## Requirements
 
@@ -16,29 +16,29 @@ version 0.1.5
 
 ## How to use
 
-1. Create collection manager (file will be created if not exists)
+1. Create stores' manager (file will be created if not exists)
 
         $nsql = new NoSQLite\NoSQLite('mydb.sqlite');
 
-2. Get collection
+2. Get store
 
-        $collection = $nsql->getCollection('movies');
+        $store = $nsql->getStore('movies');
 
-3. Set value in collection (key and value max length are [limited by SQLite TEXT datatype](http://sqlite.org/limits.html#max_length))
+3. Set value in store (key and value max length are [limited by SQLite TEXT datatype](http://sqlite.org/limits.html#max_length))
 
-        $collection->set(uniqid(), json_encode(array('title' => 'Good Will Hunting', 'director' => 'Gus Van Sant'));
+        $store->set(uniqid(), json_encode(array('title' => 'Good Will Hunting', 'director' => 'Gus Van Sant'));
 
-4. Get value from collection (will be created if not exists)
+4. Get value from store (will be created if not exists)
 
-        $collection->get('3452345');
+        $store->get('3452345');
 
 5.  Get all values
 
-        $collection->getAll();
+        $store->getAll();
 
 6. Delete all values
 
-        $collection->deleteAll();
+        $store->deleteAll();
 
 # License
 
