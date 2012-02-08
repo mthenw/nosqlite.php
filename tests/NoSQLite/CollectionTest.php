@@ -50,21 +50,6 @@ class CollectionTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test getting and setting value
-     *
-     * @param string $key   key
-     * @param string $value value
-     *
-     * @dataProvider validData
-     * @return void
-     */
-    public function testSetGetValue($key, $value)
-    {
-        $this->collection->set($key, $value);
-        $this->assertEquals($this->collection->get($key), $value);
-    }
-
-    /**
      * Test first get
      *
      * @return void
@@ -80,18 +65,83 @@ class CollectionTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test exception
+     * Test getting all values
+     *
+     * @return void
+     */
+    public function testGetAll()
+    {
+        $data = array(
+            '_1' => 'value1',
+            '_2' => 'value2'
+        );
+
+        $this->collection->deleteAll();
+
+        foreach ($data as $key => $value) {
+            $this->collection->set($key, $value);
+        }
+
+        $this->assertEquals($data, $this->collection->getAll());
+    }
+
+    /**
+     * Test getting and setting value
      *
      * @param string $key   key
      * @param string $value value
      *
-     * @dataProvider inValidData
+     * @dataProvider validData
+     * @return void
+     */
+    public function testSetGetValue($key, $value)
+    {
+        $this->collection->set($key, $value);
+        $this->assertEquals($this->collection->get($key), $value);
+    }
+
+    /**
+     * Test updating earlier set value
+     *
+     * @return void
+     */
+    public function testUpdateValue()
+    {
+        $key = uniqid();
+        $value1 = uniqid();
+        $value2 = uniqid();
+        $this->collection->set($key, $value1);
+        $this->collection->set($key, $value2);
+        $this->assertEquals($value2, $this->collection->get($key));
+    }
+
+    /**
+     * Test set method exception
+     *
+     * @param string $key   key
+     * @param string $value value
+     *
+     * @dataProvider invalidSetData
      * @expectedException InvalidArgumentException
      * @return void
      */
-    public function testSetGetExceptions($key, $value)
+    public function testSetExceptions($key, $value)
     {
         $this->collection->set($key, $value);
+        $this->collection->get($key);
+    }
+
+    /**
+     * Test get method exception
+     *
+     * @param string $key key
+     *
+     * @dataProvider invalidGetData
+     * @expectedException InvalidArgumentException
+     * @return void
+     */
+    public function testGetExceptions($key)
+    {
         $this->collection->get($key);
     }
 
@@ -121,27 +171,6 @@ class CollectionTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test getting all values
-     *
-     * @return void
-     */
-    public function testGetAll()
-    {
-        $data = array(
-            '_1' => 'value1',
-            '_2' => 'value2'
-        );
-
-        $this->collection->deleteAll();
-
-        foreach ($data as $key => $value) {
-            $this->collection->set($key, $value);
-        }
-
-        $this->assertEquals($data, $this->collection->getAll());
-    }
-
-    /**
      * Data provider - valid data
      *
      * @static
@@ -156,16 +185,29 @@ class CollectionTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Data provider - invalid data
+     * Data provider - invalid set data
      *
      * @static
      * @return array
      */
-    public static function inValidData()
+    public static function invalidSetData()
     {
         return array(
             array(0, 'value'),
-            array('key', 0)
+            array('key', 1),
+        );
+    }
+
+    /**
+     * Data provider - invalid get data
+     *
+     * @static
+     * @return array
+     */
+    public static function invalidGetData()
+    {
+        return array(
+            array(10),
         );
     }
 

@@ -79,19 +79,6 @@ class Collection
     }
 
     /**
-     * Checks if current position is valid
-     *
-     * @return boolean The return value will be casted to boolean and then evaluated.
-     * Returns TRUE on success or FALSE on failure.
-     *
-     * @return bool
-     */
-    public function valid()
-    {
-        return key($this->data) !== null;
-    }
-    
-    /**
      * Create storage table in database if not exists
      *
      * @return void

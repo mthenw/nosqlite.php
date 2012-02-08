@@ -7,5 +7,6 @@
     </testsuites>
     <logging>
         <log type="coverage-text" target="php://stdout" showUncoveredFiles="false"/>
+        <log type="coverage-html" target="/tmp/report"/>
     </logging>
 </phpunit>
