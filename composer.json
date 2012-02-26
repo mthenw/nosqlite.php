@@ -3,7 +3,7 @@
     "type": "library",
     "description": "Simple key => value store based on SQLite3",
     "keywords": ["persistence", "database", "sqlite3"],
-    "homepage": "https://github.com/mthenw/nosqlite-php",
+    "homepage": "https://github.com/mthenw/nosqlite.php",
     "license": "MIT",
     "authors": [
         {
