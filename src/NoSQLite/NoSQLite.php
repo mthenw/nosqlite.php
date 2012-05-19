@@ -34,10 +34,10 @@ class NoSQLite
      * @var PDO
      */
     protected $db = null;
-    
+
     /**
      * Create NoSQLite instance
-     * 
+     *
      * @param string $filename datastore file path
      */
     public function __construct($filename)
@@ -48,7 +48,7 @@ class NoSQLite
 
     /**
      * Get NoSQLite store instance
-     * 
+     *
      * @param string $storeName store name
      *
      * @return \NoSQLite\Store

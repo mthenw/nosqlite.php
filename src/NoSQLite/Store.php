@@ -51,7 +51,7 @@ class Store implements \Iterator, \Countable
 
     /**
      * Values stored
-     * @var array 
+     * @var array
      */
     protected $data = array();
 
