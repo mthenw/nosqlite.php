@@ -23,7 +23,7 @@ namespace NoSQLite;
  * @license  https://github.com/mthenw/NoSQLite-for-PHP The MIT License
  * @link     https://github.com/mthenw/NoSQLite-for-PHP
  */
-class Store
+class Store implements \Iterator, \Countable
 {
     /**
      * PDO instance
@@ -51,7 +51,7 @@ class Store
 
     /**
      * Values stored
-     * @var array 
+     * @var array
      */
     protected $data = array();
 
@@ -60,6 +60,18 @@ class Store
      * @var bool
      */
     protected $loaded = false;
+
+    /**
+     * Store iterator statement
+     * @var PDOStatement
+     */
+    protected $iterator;
+
+    /**
+     * Current value during iteration
+     * @var array
+     */
+    protected $current = null;
 
     /**
      * Create store
@@ -206,5 +218,66 @@ class Store
         $stmt = $this->db->prepare('DELETE FROM ' . $this->name);
         $stmt->execute();
         $this->data = array();
+    }
+
+    /**
+     * Rewind the store to the first value
+     *
+     * @return void
+     */
+    public function rewind()
+    {
+        $this->iterator = $this->db->query('SELECT * FROM ' . $this->name);
+        $this->current = $this->iterator->fetch(\PDO::FETCH_NUM, \PDO::FETCH_ORI_NEXT);
+    }
+
+    /**
+     * Move forward to next value
+     *
+     * @return void
+     */
+    public function next()
+    {
+        $this->current = $this->iterator->fetch(\PDO::FETCH_NUM, \PDO::FETCH_ORI_NEXT);
+    }
+
+    /**
+     * Check if current position is valid
+     *
+     * @return bool
+     */
+    public function valid()
+    {
+        return $this->current !== false;
+    }
+
+    /**
+     * Return the current value
+     *
+     * @return string|null
+     */
+    public function current()
+    {
+        return isset($this->current[1]) ? $this->current[1] : null;
+    }
+
+    /**
+     * Return the key of the current value
+     *
+     * @return string|null
+     */
+    public function key()
+    {
+        return isset($this->current[0]) ? $this->current[0] : null;
+    }
+
+    /**
+     * Get number of values in store
+     *
+     * @return int
+     */
+    public function count()
+    {
+        return (int) $this->db->query('SELECT COUNT(*) FROM ' . $this->name)->fetchColumn();
     }
 }
