@@ -174,6 +174,20 @@ class StoreTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test Countable interface
+     *
+     * @return void
+     */
+    public function testCount()
+    {
+        $count = rand(1, 100);
+        for ($i = 0; $i < $count; $i++) {
+            $this->store->set(uniqid(), uniqid());
+        }
+        $this->assertEquals($count, count($this->store));
+    }
+
+    /**
      * Data provider - valid data
      *
      * @static
