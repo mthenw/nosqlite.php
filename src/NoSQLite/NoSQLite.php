@@ -9,8 +9,8 @@
  * @category NoSQLite
  * @package  NoSQLite
  * @author   Maciej Winnicki <maciej.winnicki@gmail.com>
- * @license  https://github.com/mthenw/NoSQLite-for-PHP The MIT License
- * @link     https://github.com/mthenw/NoSQLite-for-PHP
+ * @license  https://github.com/mthenw/nosqlite.php The MIT License
+ * @link     https://github.com/mthenw/nosqlite.php
  */
 
 namespace NoSQLite;
@@ -24,8 +24,8 @@ use NoSQLite\Store;
  * @category NoSQLite
  * @package  NoSQLite
  * @author   Maciej Winnicki <maciej.winnicki@gmail.com>
- * @license  https://github.com/mthenw/NoSQLite-for-PHP The MIT License
- * @link     https://github.com/mthenw/NoSQLite-for-PHP
+ * @license  https://github.com/mthenw/nosqlite.php The MIT License
+ * @link     https://github.com/mthenw/nosqlite.php
  */
 class NoSQLite
 {
