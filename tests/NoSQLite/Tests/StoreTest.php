@@ -235,6 +235,8 @@ class StoreTest extends \PHPUnit_Framework_TestCase
      */
     public function tearDown()
     {
+        unset($this->nsl);
+        unset($this->store);
         unlink(self::DB_FILE);
     }
 }
