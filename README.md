@@ -12,9 +12,16 @@ NoSQLite is simple key-value store using SQLite as raw data store. Mainly for sm
     - PDO (by default as of PHP 5.1.0)
     - PDO_SQLITE (by default as of PHP 5.1.0)
 
-## Composer package
+## Installing via Composer
 
-[mthenw/nosqlite](http://packagist.org/packages/mthenw/nosqlite)
+[Get composer](http://getcomposer.org/download/) and add following lines to ```composer.json```:
+```
+{
+    "require": {
+        "mthenw/nosqlite": "*@stable"
+    }
+}
+```
 
 ## Usage
 
@@ -44,18 +51,18 @@ NoSQLite is simple key-value store using SQLite as raw data store. Mainly for sm
 
 7. Iterate through store
 
-        foreach($store as $key => $value)    // Implements Iterator interface
+        foreach($store as $key => $value) // Implements Iterator interface
             ...
 
 8. Get number of values in store
 
-        count($store);    // Implements Countable interface
+        count($store); // Implements Countable interface
 
 ## License
 
 (The MIT License)
 
-Copyright 2011 Maciej Winnicki http://maciejwinnicki.pl
+Copyright 2013 Maciej Winnicki http://maciejwinnicki.pl
 
 This project is free software released under the MIT/X11 license:
 
