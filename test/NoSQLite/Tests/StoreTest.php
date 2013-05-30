@@ -188,6 +188,21 @@ class StoreTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test Iterator interface
+     *
+     * @return void
+     */
+    public function testIteration()
+    {
+        $this->store->set('key1', 'value1');
+
+        foreach ($this->store as $key => $value) {
+            $this->assertSame($key, 'key1');
+            $this->assertSame($value, 'value1');
+        }
+    }
+
+    /**
      * Data provider - valid data
      *
      * @static
