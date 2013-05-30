@@ -49,14 +49,14 @@ NoSQLite is simple key-value store using SQLite as raw data store. Mainly for sm
 
         $store->deleteAll();
 
-7. Iterate through store
+7. Iterate through store (Store implements Iterator interface)
 
-        foreach($store as $key => $value) // Implements Iterator interface
+        foreach($store as $key => $value)
             ...
 
-8. Get number of values in store
+8. Get number of values in store (Store implements Countable interface)
 
-        count($store); // Implements Countable interface
+        count($store);
 
 ## License
 
