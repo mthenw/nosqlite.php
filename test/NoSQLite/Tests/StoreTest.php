@@ -32,12 +32,12 @@ class StoreTest extends \PHPUnit_Framework_TestCase
     const DB_FILE = 'storeTest.db';
 
     /**
-     * @var NoSQLite\NoSQLite
+     * @var NoSQLite
      */
     protected $nsl;
 
     /**
-     * @var NoSQLite\Store
+     * @var Store
      */
     protected $store;
 
@@ -125,7 +125,7 @@ class StoreTest extends \PHPUnit_Framework_TestCase
      * @param string $value value
      *
      * @dataProvider invalidSetData
-     * @expectedException InvalidArgumentException
+     * @expectedException \InvalidArgumentException
      * @return void
      */
     public function testSetExceptions($key, $value)
@@ -140,7 +140,7 @@ class StoreTest extends \PHPUnit_Framework_TestCase
      * @param string $key key
      *
      * @dataProvider invalidGetData
-     * @expectedException InvalidArgumentException
+     * @expectedException \InvalidArgumentException
      * @return void
      */
     public function testGetExceptions($key)

@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit bootstrap="tests/bootstrap.php">
+<phpunit>
     <testsuites>
         <testsuite name="nosqlite-php Test Suite">
-            <directory>./tests/</directory>
+            <directory>./test</directory>
         </testsuite>
     </testsuites>
+    <filter>
+        <whitelist>
+            <directory suffix=".php">./src/NoSQLite</directory>
+        </whitelist>
+    </filter>
     <logging>
         <log type="coverage-text" target="php://stdout" showUncoveredFiles="false"/>
     </logging>

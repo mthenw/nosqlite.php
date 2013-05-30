@@ -58,6 +58,16 @@ NoSQLite is simple key-value store using SQLite as raw data store. Mainly for sm
 
         count($store);
 
+## Running tests
+
+PHPUnit is required as dev package in ```composer.json``` so test should be run using
+
+        ./vendor/bin/phpunit
+
+or simply
+
+        make test
+
 ## License
 
 (The MIT License)

@@ -4,5 +4,6 @@ php:
   - 5.4
 env:
   - DB=sqlite
-before_install:
-  git submodule init && git submodule --quiet update
+before_script:
+  - composer install --dev --no-interaction
+  - make test

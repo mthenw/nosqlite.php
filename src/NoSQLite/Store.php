@@ -13,6 +13,8 @@
  */
 
 namespace NoSQLite;
+use PDO;
+use PDOStatement;
 
 /**
  * Class Store
@@ -106,7 +108,7 @@ class Store implements \Iterator, \Countable
      *
      * @param string $key key
      *
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      * @return string|null
      */
     public function get($key)
@@ -160,7 +162,7 @@ class Store implements \Iterator, \Countable
      * @param string $value value
      *
      * @return string value stored
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function set($key, $value)
     {
