@@ -60,9 +60,9 @@ Library is fully covered with unit tests.
 
         count($store);
 
-## Running tests
+## Tests
 
-PHPUnit is required as dev package in ```composer.json``` so test should be run using
+Tests are written in PHPUnit which is required as a dev package in ```composer.json```. For running test use
 
         ./vendor/bin/phpunit
 
