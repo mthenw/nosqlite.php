@@ -64,11 +64,11 @@ Library is fully covered with unit tests.
 
 Tests are written in PHPUnit which is required as a dev package in ```composer.json```. For running test use
 
-        ./vendor/bin/phpunit
+    ./vendor/bin/phpunit
 
 or simply
 
-        make test
+    make test
 
 ## License
 
