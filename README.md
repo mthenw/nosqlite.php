@@ -1,6 +1,6 @@
 # NoSQLite – simple key => value store based on SQLite3
 
-[![Build Status](https://secure.travis-ci.org/mthenw/nosqlite.php.png)](https://travis-ci.org/mthenw/nosqlite.php)
+[![Build Status](https://secure.travis-ci.org/mthenw/nosqlite.php.png)](https://travis-ci.org/mthenw/nosqlite.php) [![Latest Stable Version](https://poser.pugx.org/mthenw/nosqlite/v/stable.png)](https://packagist.org/packages/mthenw/nosqlite)
 
 ## Introduction
 
