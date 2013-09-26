@@ -1,39 +1,16 @@
 <?php
 
-/**
- * NoSQLite Test
- *
- * PHP Version 5
- *
- * @category NoSQLite
- * @package  NoSQLite
- * @author   Maciej Winnicki <maciej.winnicki@gmail.com>
- * @license  https://github.com/mthenw/NoSQLite-for-PHP The MIT License
- * @link     https://github.com/mthenw/NoSQLite-for-PHP
- */
-
 namespace NoSQLite\Tests;
 
 use NoSQLite\NoSQLite;
 use NoSQLite\Store;
 
-/**
- * Class NoSQLiteTest
- *
- * @category NoSQLite
- * @package  NoSQLite
- * @author   Maciej Winnicki <maciej.winnicki@gmail.com>
- * @license  https://github.com/mthenw/NoSQLite-for-PHP The MIT License
- * @link     https://github.com/mthenw/NoSQLite-for-PHP
- */
 class NoSQLiteTest extends \PHPUnit_Framework_TestCase
 {
     const DB_FILE = 'testNoSQLiteTest.db';
 
     /**
-     * Test creating new store
-     *
-     * @return void
+     * @return null
      */
     public function testNewStore()
     {
@@ -43,9 +20,7 @@ class NoSQLiteTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tear down
-     *
-     * @return void
+     * @return null
      */
     public function tearDown()
     {

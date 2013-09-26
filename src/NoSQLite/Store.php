@@ -1,70 +1,43 @@
 <?php
 
-/**
- * Store
- *
- * PHP Version 5
- *
- * @category NoSQLite
- * @package  NoSQLite
- * @author   Maciej Winnicki <maciej.winnicki@gmail.com>
- * @license  https://github.com/mthenw/nosqlite.php The MIT License
- * @link     https://github.com/mthenw/nosqlite.php
- */
-
 namespace NoSQLite;
+
 use PDO;
 use PDOStatement;
 
-/**
- * Class Store
- *
- * @category NoSQLite
- * @package  NoSQLite
- * @author   Maciej Winnicki <maciej.winnicki@gmail.com>
- * @license  https://github.com/mthenw/nosqlite.php The MIT License
- * @link     https://github.com/mthenw/nosqlite.php
- */
 class Store implements \Iterator, \Countable
 {
     /**
-     * PDO instance
      * @var PDO
      */
     protected $db = null;
 
     /**
-     * Store name
      * @var string
      */
     protected $name = null;
 
     /**
-     * Key column name
      * @var string
      */
     protected $keyColumnName = 'key';
 
     /**
-     * Value column name
      * @var string
      */
     protected $valueColumnName = 'value';
 
     /**
-     * Values stored
      * @var array
      */
     protected $data = array();
 
     /**
-     * Data were loaded from DB
      * @var bool
      */
-    protected $loaded = false;
+    protected $isDataLoadedFromDb = false;
 
     /**
-     * Store iterator statement
      * @var PDOStatement
      */
     protected $iterator;
@@ -76,12 +49,10 @@ class Store implements \Iterator, \Countable
     protected $current = null;
 
     /**
-     * Create store
-     *
-     * @param PDO    $db   PDO database instance
+     * @param PDO $db PDO database instance
      * @param string $name store name
      *
-     * @return void
+     * @return \NoSQLite\Store
      */
     public function __construct($db, $name)
     {
@@ -93,7 +64,7 @@ class Store implements \Iterator, \Countable
     /**
      * Create storage table in database if not exists
      *
-     * @return void
+     * @return null
      */
     protected function createTable()
     {
@@ -104,8 +75,6 @@ class Store implements \Iterator, \Countable
     }
 
     /**
-     * Get value for specified key
-     *
      * @param string $key key
      *
      * @throws \InvalidArgumentException
@@ -119,7 +88,7 @@ class Store implements \Iterator, \Countable
 
         if (isset($this->data[$key])) {
             return $this->data[$key];
-        } else if (!$this->loaded) {
+        } elseif (!$this->isDataLoadedFromDb) {
             $stmt = $this->db->prepare(
                 'SELECT * FROM ' . $this->name . ' WHERE ' . $this->keyColumnName
                 . ' = :key;'
@@ -143,7 +112,7 @@ class Store implements \Iterator, \Countable
      */
     public function getAll()
     {
-        if (!$this->loaded) {
+        if (!$this->isDataLoadedFromDb) {
             $stmt = $this->db->prepare('SELECT * FROM ' . $this->name);
             $stmt->execute();
 
@@ -156,9 +125,7 @@ class Store implements \Iterator, \Countable
     }
 
     /**
-     * Set value on specified key
-     *
-     * @param string $key   key
+     * @param string $key key
      * @param string $value value
      *
      * @return string value stored
@@ -192,11 +159,9 @@ class Store implements \Iterator, \Countable
     }
 
     /**
-     * Delete value from store
-     *
      * @param string $key key
      *
-     * @return void
+     * @return null
      */
     public function delete($key)
     {
@@ -213,7 +178,7 @@ class Store implements \Iterator, \Countable
     /**
      * Delete all values from store
      *
-     * @return void
+     * @return null
      */
     public function deleteAll()
     {
@@ -223,9 +188,7 @@ class Store implements \Iterator, \Countable
     }
 
     /**
-     * Rewind the store to the first value
-     *
-     * @return void
+     * @return null
      */
     public function rewind()
     {
@@ -234,9 +197,7 @@ class Store implements \Iterator, \Countable
     }
 
     /**
-     * Move forward to next value
-     *
-     * @return void
+     * @return null
      */
     public function next()
     {
@@ -254,8 +215,6 @@ class Store implements \Iterator, \Countable
     }
 
     /**
-     * Return the current value
-     *
      * @return string|null
      */
     public function current()
@@ -264,8 +223,6 @@ class Store implements \Iterator, \Countable
     }
 
     /**
-     * Return the key of the current value
-     *
      * @return string|null
      */
     public function key()
@@ -274,8 +231,6 @@ class Store implements \Iterator, \Countable
     }
 
     /**
-     * Get number of values in store
-     *
      * @return int
      */
     public function count()

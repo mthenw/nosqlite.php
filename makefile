@@ -1,4 +1,7 @@
 test:
 	@./vendor/bin/phpunit
 
-.PHONY: test
+cs:
+	@./vendor/bin/phpcs --standard=PSR2 --extensions=php src/
+
+.PHONY: test cs
