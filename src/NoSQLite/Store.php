@@ -174,14 +174,7 @@ class Store implements \Iterator, \Countable
             throw new \InvalidArgumentException('Expected string as value');
         }
 
-        if (isset($this->data[$key])) {
-            $queryString ='UPDATE ' . $this->name . ' SET ';
-            $queryString.= $this->valueColumnName . ' = :value WHERE ';
-            $queryString.= $this->keyColumnName . ' = :key;';
-        } else {
-            $queryString = 'INSERT INTO ' . $this->name . ' VALUES (:key, :value);';
-        }
-
+        $queryString = 'REPLACE INTO ' . $this->name . ' VALUES (:key, :value);';
         $stmt = $this->db->prepare($queryString);
         $stmt->bindParam(':key', $key, \PDO::PARAM_STR);
         $stmt->bindParam(':value', $value, \PDO::PARAM_STR);

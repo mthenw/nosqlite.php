@@ -49,7 +49,7 @@ class StoreTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->nsl = new NoSQLite(self::DB_FILE);
-        $this->store = $this->nsl->getStore('test');
+        $this->store = $this->getStore();
     }
 
     /**
@@ -116,6 +116,22 @@ class StoreTest extends \PHPUnit_Framework_TestCase
         $this->store->set($key, $value1);
         $this->store->set($key, $value2);
         $this->assertEquals($value2, $this->store->get($key));
+    }
+
+    /**
+     * Test updating earlier set value from a new store without cache
+     *
+     * @return void
+     */
+    public function testSetExisting()
+    {
+        $key = uniqid();
+        $value1 = uniqid();
+        $value2 = uniqid();
+        $this->store->set($key, $value1);
+        $newStore = $this->getStore();
+        $newStore->set($key, $value2);
+        $this->assertEquals($value2, $newStore->get($key));
     }
 
     /**
@@ -253,5 +269,15 @@ class StoreTest extends \PHPUnit_Framework_TestCase
         unset($this->nsl);
         unset($this->store);
         unlink(self::DB_FILE);
+    }
+
+    /**
+     * Get a new test store instance
+     *
+     * @return Store
+     */
+    protected function getStore()
+    {
+        return $this->nsl->getStore('test');
     }
 }
