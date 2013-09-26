@@ -6,5 +6,4 @@ env:
   - DB=sqlite
 before_script:
   - composer install --dev --no-interaction --prefer-source
-script:
-  - make test
+script: make cs && make test
