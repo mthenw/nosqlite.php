@@ -1,32 +1,11 @@
 <?php
 
-/**
- * NoSQLite Store Test
- *
- * PHP Version 5
- *
- * @category NoSQLite
- * @package  NoSQLite
- * @author   Maciej Winnicki <maciej.winnicki@gmail.com>
- * @license  https://github.com/mthenw/NoSQLite-for-PHP The MIT License
- * @link     https://github.com/mthenw/NoSQLite-for-PHP
- */
-
 namespace NoSQLite\Tests;
 
 use PHPUnit_Framework_TestCase;
 use NoSQLite\NoSQLite;
 use NoSQLite\Store;
 
-/**
- * Class StoreTest
- *
- * @category NoSQLite
- * @package  NoSQLite
- * @author   Maciej Winnicki <maciej.winnicki@gmail.com>
- * @license  https://github.com/mthenw/NoSQLite-for-PHP The MIT License
- * @link     https://github.com/mthenw/NoSQLite-for-PHP
- */
 class StoreTest extends \PHPUnit_Framework_TestCase
 {
     const DB_FILE = 'storeTest.db';
@@ -42,9 +21,7 @@ class StoreTest extends \PHPUnit_Framework_TestCase
     protected $store;
 
     /**
-     * Setup test
-     *
-     * @return void
+     * @return null
      */
     public function setUp()
     {
@@ -53,9 +30,7 @@ class StoreTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test first get
-     *
-     * @return void
+     * @return null
      */
     public function testFirstGet()
     {
@@ -68,9 +43,7 @@ class StoreTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test getting all values
-     *
-     * @return void
+     * @return null
      */
     public function testGetAll()
     {
@@ -89,13 +62,11 @@ class StoreTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test getting and setting value
-     *
-     * @param string $key   key
+     * @param string $key key
      * @param string $value value
      *
      * @dataProvider validData
-     * @return void
+     * @return null
      */
     public function testSetGetValue($key, $value)
     {
@@ -104,9 +75,7 @@ class StoreTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test updating earlier set value
-     *
-     * @return void
+     * @return null
      */
     public function testUpdateValue()
     {
@@ -137,12 +106,12 @@ class StoreTest extends \PHPUnit_Framework_TestCase
     /**
      * Test set method exception
      *
-     * @param string $key   key
+     * @param string $key key
      * @param string $value value
      *
      * @dataProvider invalidSetData
      * @expectedException \InvalidArgumentException
-     * @return void
+     * @return null
      */
     public function testSetExceptions($key, $value)
     {
@@ -151,13 +120,11 @@ class StoreTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test get method exception
-     *
      * @param string $key key
      *
      * @dataProvider invalidGetData
      * @expectedException \InvalidArgumentException
-     * @return void
+     * @return null
      */
     public function testGetExceptions($key)
     {
@@ -165,9 +132,7 @@ class StoreTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test delete value
-     *
-     * @return void
+     * @return null
      */
     public function testDelete()
     {
@@ -178,9 +143,7 @@ class StoreTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test all values
-     *
-     * @return void
+     * @return null
      */
     public function testDeleteAll()
     {
@@ -190,9 +153,7 @@ class StoreTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test Countable interface
-     *
-     * @return void
+     * @return null
      */
     public function testCount()
     {
@@ -204,9 +165,7 @@ class StoreTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test Iterator interface
-     *
-     * @return void
+     * @return null
      */
     public function testIteration()
     {
@@ -219,8 +178,6 @@ class StoreTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Data provider - valid data
-     *
      * @static
      * @return array
      */
@@ -233,8 +190,6 @@ class StoreTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Data provider - invalid set data
-     *
      * @static
      * @return array
      */
@@ -247,8 +202,6 @@ class StoreTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Data provider - invalid get data
-     *
      * @static
      * @return array
      */
@@ -260,9 +213,7 @@ class StoreTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tear down
-     *
-     * @return void
+     * @return null
      */
     public function tearDown()
     {
