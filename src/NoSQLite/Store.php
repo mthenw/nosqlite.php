@@ -10,43 +10,43 @@ class Store implements \Iterator, \Countable
     /**
      * @var PDO
      */
-    protected $db = null;
+    private $db = null;
 
     /**
      * @var string
      */
-    protected $name = null;
+    private $name = null;
 
     /**
      * @var string
      */
-    protected $keyColumnName = 'key';
+    private $keyColumnName = 'key';
 
     /**
      * @var string
      */
-    protected $valueColumnName = 'value';
+    private $valueColumnName = 'value';
 
     /**
      * @var array
      */
-    protected $data = array();
+    private $data = array();
 
     /**
      * @var bool
      */
-    protected $isDataLoadedFromDb = false;
+    private $isDataLoadedFromDb = false;
 
     /**
      * @var PDOStatement
      */
-    protected $iterator;
+    private $iterator;
 
     /**
      * Current value during iteration
      * @var array
      */
-    protected $current = null;
+    private $current = null;
 
     /**
      * @param PDO $db PDO database instance
@@ -59,19 +59,6 @@ class Store implements \Iterator, \Countable
         $this->db = $db;
         $this->name = $name;
         $this->createTable();
-    }
-
-    /**
-     * Create storage table in database if not exists
-     *
-     * @return null
-     */
-    protected function createTable()
-    {
-        $stmt = 'CREATE TABLE IF NOT EXISTS "' . $this->name;
-        $stmt.= '" ("' . $this->keyColumnName . '" TEXT PRIMARY KEY, "';
-        $stmt.= $this->valueColumnName . '" TEXT);';
-        $this->db->exec($stmt);
     }
 
     /**
@@ -236,5 +223,18 @@ class Store implements \Iterator, \Countable
     public function count()
     {
         return (int) $this->db->query('SELECT COUNT(*) FROM ' . $this->name)->fetchColumn();
+    }
+
+    /**
+     * Create storage table in database if not exists
+     *
+     * @return null
+     */
+    private function createTable()
+    {
+        $stmt = 'CREATE TABLE IF NOT EXISTS "' . $this->name;
+        $stmt.= '" ("' . $this->keyColumnName . '" TEXT PRIMARY KEY, "';
+        $stmt.= $this->valueColumnName . '" TEXT);';
+        $this->db->exec($stmt);
     }
 }

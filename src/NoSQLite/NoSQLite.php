@@ -12,7 +12,7 @@ class NoSQLite
     /**
      * @var PDO
      */
-    protected $db = null;
+    private $db = null;
 
     /**
      * @param string $filename datastore file path
