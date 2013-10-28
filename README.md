@@ -8,8 +8,6 @@
 
 NoSQLite is simple key-value store using SQLite as raw data store. Mainly for small project where MySQL is too heavy and files are too ugly.
 
-Library is fully covered with unit tests.
-
 ## Requirements
 
 - PHP >=5.3.2
