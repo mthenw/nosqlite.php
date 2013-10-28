@@ -1,5 +1,7 @@
+COVERAGE=
+
 test:
-	@./vendor/bin/phpunit
+	@./vendor/bin/phpunit $(COVERAGE)
 
 cs:
 	@./vendor/bin/phpcs --standard=PSR2 --extensions=php src/
