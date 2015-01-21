@@ -8,8 +8,7 @@
     "authors": [
         {
             "name": "Maciej Winnicki",
-            "email": "maciej.winnicki@gmail.com",
-            "homepage": "http://maciejwinnicki.pl/"
+            "email": "maciej.winnicki@gmail.com"
         }
     ],
     "require": {
