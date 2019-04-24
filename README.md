@@ -37,7 +37,7 @@ NoSQLite is simple key-value store using SQLite as raw data store. Mainly for sm
 
 3. Set value in store (key and value max length are [limited by SQLite TEXT datatype](http://sqlite.org/limits.html#max_length))
 
-        $store->set(uniqid(), json_encode(array('title' => 'Good Will Hunting', 'director' => 'Gus Van Sant'));
+        $store->set(uniqid(), json_encode(array('title' => 'Good Will Hunting', 'director' => 'Gus Van Sant')));
 
 4. Get value from store (will be created if not exists)
 
